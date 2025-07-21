@@ -54,7 +54,23 @@ export default {
       context.addCustomMessageListener(namespace, this.onCustomMessage);
 
       this.log('[mediacast:init] - Application is ready, starting system.');
-      context.start();
+
+			let vCastReceiverOptions = new cast.framework.CastReceiverOptions();
+
+			if (loadRequestData.media.customData.CastReceiverOptions)	{
+				for (let i in loadRequestData.media.customData.CastReceiverOptions)
+					vCastReceiverOptions[i] = loadRequestData.media.customData.CastReceiverOptions[i];
+			}
+
+			if (loadRequestData.media.customData.PlaybackConfig)	{
+				let vPlaybackConfig = new cast.framework.PlaybackConfig();
+				for (let i in loadRequestData.media.customData.PlaybackConfig)
+					vPlaybackConfig[i] = loadRequestData.media.customData.PlaybackConfig[i];
+					
+				vCastReceiverOptions.playbackConfig = vPlaybackConfig;
+			}
+			
+			context.start(vCastReceiverOptions);      
     },
 
     setPlayerEvents(player) {
