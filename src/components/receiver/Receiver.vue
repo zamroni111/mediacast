@@ -86,7 +86,8 @@ export default {
 					else if (ext.includes('ism')) {
 						loadRequestData.media.contentType = 'application/vnd.ms-sstr+xml';
 					}
-
+					
+					/////// apply sender's loadRequestData.media.customData.CastReceiverOptions to CastReceiverOptions
 					if (loadRequestData.media.customData && loadRequestData.media.customData.CastReceiverOptions) {
 						for (let i in loadRequestData.media.customData.CastReceiverOptions)
 							if (i !== "playbackConfig") vCastReceiverOptions[i] = loadRequestData.media.customData.CastReceiverOptions[i];
@@ -96,6 +97,7 @@ export default {
 						playbackConfig.licenseUrl = licenseUrl;
 						playbackConfig.protectionSystem = this.drms[drm];
 
+						////// apply sender's loadRequest.media.customData.PlaybackConfig to playbackConfig
 						if (loadRequest.media.customData && loadRequest.media.customData.PlaybackConfig) {
 							for (let i in loadRequest.media.customData.PlaybackConfig)
 								playbackConfig[i] = loadRequest.media.customData.PlaybackConfig[i];
